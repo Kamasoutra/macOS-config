@@ -42,7 +42,6 @@ echo '\n👨‍🚀 Installing Homebrew Taps'
 brew tap caskroom/cask
 brew tap buo/cask-upgrade
 
-## Installations des logiciels
 echo '\n👨‍🚀 Installing command-line utils'
 brew install git curl imagemagick@6 node rbenv wget zsh mas cmake coreutils
 
