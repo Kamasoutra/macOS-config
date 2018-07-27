@@ -36,7 +36,7 @@ brew update
 # mas install & signin
 echo '\n👨‍🚀 MAS install & signin : cauz the AppStore is waaaaaaay tooooooo sloooooooooooooow'
 brew install mas
-mas signin $MAS_COMPTE "$MAS_PASSWORD"
+mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 
 echo '\n👨‍🚀 Installing Homebrew Taps'
 brew tap caskroom/cask
