@@ -1,0 +1,48 @@
+export ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="kama"
+ENABLE_CORRECTION="true"
+plugins=(git rails ruby brew gem osx docker notify nyan)
+
+source $ZSH/oh-my-zsh.sh
+
+eval
+            fuck () {
+                TF_PREVIOUS=$(fc -ln -1 | tail -n 1);
+                TF_CMD=$(
+                    TF_ALIAS=fuck
+                    TF_SHELL_ALIASES=$(alias)
+                    PYTHONIOENCODING=utf-8
+                    thefuck $TF_PREVIOUS THEFUCK_ARGUMENT_PLACEHOLDER $*
+                ) && eval $TF_CMD;
+                test -n "$TF_CMD" && print -s $TF_CMD
+            }
+
+alias update-all="brew update && brew upgrade && brew cleanup && brew cu -ay && brew cask cleanup && apm update && apm upgrade && softwareupdate -ia"
+alias update-dns="sudo killall -HUP mDNSResponder"
+alias update-conf="cp /keybase/private/kama/ssh_conf/* ~/.ssh"
+
+alias cat="lolcat"
+alias rm="trash"
+alias resource="source ~/.zshrc"
+alias ip="curl -4 icanhazip.com && curl -6 icanhazip.com"
+alias review="merge --no-ff --no-commit"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+alias rs="rails server -b 0.0.0.0"
+alias rs-sync="bundle exec rake browser_sync:start"
+
+export PATH="/usr/local/opt/imagemagick@6/bin:$PATH"
+
+PATH=~/.nexustools:$PATH
+
+zstyle ':notify:*' error-icon "https://media3.giphy.com/media/10ECejNtM1GyRy/200_s.gif"
+zstyle ':notify:*' error-title "wow such #fail"
+zstyle ':notify:*' error-sound "Glass"
+zstyle ':notify:*' success-icon "https://s-media-cache-ak0.pinimg.com/564x/b5/5a/18/b55a1805f5650495a74202279036ecd2.jpg"
+zstyle ':notify:*' success-title "very #success. wow"
+zstyle ':notify:*' success-sound "default"
+zstyle ':notify:*' activate-terminal yes
+zstyle ':notify:*' command-complete-timeout 15
+
+PATH="$HOME/.fastlane/bin:$PATH"
