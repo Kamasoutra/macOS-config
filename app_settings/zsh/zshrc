@@ -5,17 +5,7 @@ plugins=(git rails ruby brew gem osx docker notify nyan)
 
 source $ZSH/oh-my-zsh.sh
 
-eval
-            fuck () {
-                TF_PREVIOUS=$(fc -ln -1 | tail -n 1);
-                TF_CMD=$(
-                    TF_ALIAS=fuck
-                    TF_SHELL_ALIASES=$(alias)
-                    PYTHONIOENCODING=utf-8
-                    thefuck $TF_PREVIOUS THEFUCK_ARGUMENT_PLACEHOLDER $*
-                ) && eval $TF_CMD;
-                test -n "$TF_CMD" && print -s $TF_CMD
-            }
+eval $(thefuck --alias)
 
 alias update-all="brew update && brew upgrade && brew cleanup && brew cu -ay && brew cask cleanup && apm update && apm upgrade && softwareupdate -ia"
 alias update-dns="sudo killall -HUP mDNSResponder"
