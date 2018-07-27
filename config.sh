@@ -29,8 +29,6 @@ else
   read -p '    - gist id : ' ATOM_SS_GIST
 fi
 
-echo $MAS_PASSWORD
-
 # Homebrew install
 if test ! $(which brew)
 then
