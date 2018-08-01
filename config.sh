@@ -50,10 +50,12 @@ brew tap caskroom/cask
 brew tap buo/cask-upgrade
 
 echo '\n👨‍🚀 Installing command-line utils'
-brew install git curl imagemagick@6 node rbenv wget zsh mas cmake coreutils
+brew install git curl imagemagick@6 node rbenv wget zsh cmake coreutils
 
-echo '\n👨‍🚀 Installing oh-my-zsh'
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+echo '\n👨‍🚀 Installing oh-my-zsh in a new window'
+osascript -e 'tell app "Terminal"
+    do script "sh -c '$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'"
+end tell'
 
 echo '\n👨‍🚀 git configuration'
 git config --global core.editor "nano"
