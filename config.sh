@@ -48,6 +48,7 @@ mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 echo '\n👨‍🚀 Installing Homebrew Taps'
 brew tap caskroom/cask
 brew tap buo/cask-upgrade
+brew tap proxmark/proxmark3 
 
 echo '\n👨‍🚀 Installing command-line utils'
 brew install git curl imagemagick@6 node rbenv wget zsh cmake coreutils
@@ -107,14 +108,12 @@ mas_install 'iMovie'
 
 echo '\n👨‍🚀 Installing development apps'
 brew install python python3
-brew cask install arduino atom beyond-compare cocoapods-app codekit docker electrum intellij-idea-ce kitematic postman sublime-text
+brew cask install arduino atom beyond-compare cocoapods-app codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
 mas_install 'Xcode'
 apm install sync-settings
 rbenv install 2.5.0
 rbenv global 2.5.0
 GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
-rbenv install 2.5.0
-rbenv global 2.5.0
 
 echo '\n👨‍🚀 Installing security apps'
 brew install proxmark3
