@@ -54,7 +54,7 @@ brew install git curl imagemagick@6 node rbenv wget zsh cmake coreutils
 
 echo '\n👨‍🚀 Installing oh-my-zsh in a new window'
 osascript -e 'tell app "Terminal"
-    do script "sh -c '$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)'"
+    do script "sh -c \"$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)\""
 end tell'
 
 echo '\n👨‍🚀 git configuration'
