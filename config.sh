@@ -111,6 +111,8 @@ apm install sync-settings
 rbenv install 2.5.0
 rbenv global 2.5.0
 GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
+rbenv install 2.5.0
+rbenv global 2.5.0
 
 echo '\n👨‍🚀 Installing security apps'
 brew install proxmark3
@@ -119,9 +121,9 @@ mas_install 'Encrypto'
 
 echo '\n👨‍🚀 Installing office apps'
 brew cask install macdown
-mas_install 'Pages'
 mas_install 'Keynote'
 mas_install 'Numbers'
+mas_install 'Pages'
 
 echo '\n👨‍🚀 Installing games'
 brew cask install league-of-legends minecraft openemu steam
@@ -157,7 +159,7 @@ defaults write com.apple.AddressBook ABNameSortingFormat 'sortingFirstName sorti
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:gridSpacing 29" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:iconSize 32" ~/Library/Preferences/com.apple.finder.plist
 /usr/libexec/PlistBuddy -c "Set :DesktopViewSettings:IconViewSettings:textSize 32" ~/Library/Preferences/com.apple.finder.plist
-# safari : do not track, push notifications,
+# safari : do not track, push notifications
 defaults write com.apple.Safari SendDoNotTrackHTTPHeader false
 defaults write com.apple.Safari CanPromptForPushNotifications false
 # dock
@@ -165,7 +167,7 @@ defaults write com.apple.dock magnification true
 defaults write com.apple.dock orientation 'Left'
 defaults write com.apple.dock autohide true
 defaults write com.apple.dock tilesize 30
-defaults write com.apple.dock largesize  67
+defaults write com.apple.dock largesize 67
 # screensaver
 defaults -currentHost write com.apple.screensaver askForPassword true
 defaults -currentHost write com.apple.screensaver askForPasswordDelay 0
