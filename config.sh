@@ -18,10 +18,8 @@ else
 
   # git config
   echo '\n👨‍🚀 For git configuration, please provide needed infos :'
-  read -p '    - git username (default : Jean-Pierre Palik) : ' GIT_USER
-  GIT_USER=${GIT_USER:-Jean-Pierre Palik}
-  read -p '    - git email (default : kama@palik.fr) : ' GIT_EMAIL
-  GIT_EMAIL=${GIT_EMAIL:-kama@palik.fr}
+  read -p '    - git username : ' GIT_USER
+  read -p '    - git email : ' GIT_EMAIL
 
   # Atom sync-settings
   echo '\n👨‍🚀 For Atom sync-settings configuration, please provide configuration :'
@@ -48,7 +46,7 @@ mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 echo '\n👨‍🚀 Installing Homebrew Taps'
 brew tap caskroom/cask
 brew tap buo/cask-upgrade
-brew tap proxmark/proxmark3 
+brew tap proxmark/proxmark3
 
 echo '\n👨‍🚀 Installing command-line utils'
 brew install git curl imagemagick@6 node rbenv wget zsh cmake coreutils
