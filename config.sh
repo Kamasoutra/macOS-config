@@ -83,7 +83,7 @@ mas_install 'Twitter'
 
 echo '\n👨‍🚀 Installing utilities apps'
 brew install exiftool iperf lolcat ncdu nmap nyancat speedtest_cli terminal-notifier thefuck trash wakeonlan
-brew cask install aerial daisydisk etcher exodus handbrake hugin molotov sketch-toolbox spectacle virtualbox wireshark xmind
+brew cask install aerial daisydisk balenaetcher exodus handbrake hugin molotov sketch-toolbox spectacle virtualbox wireshark xmind
 mas_install 'Airmail 3'
 mas_install 'Amphetamine'
 mas_install 'DrCleaner'
@@ -106,7 +106,7 @@ mas_install 'iMovie'
 
 echo '\n👨‍🚀 Installing development apps'
 brew install python python3
-brew cask install arduino atom beyond-compare cocoapods-app codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
+brew cask install arduino atom beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
 mas_install 'Xcode'
 apm install sync-settings
 rbenv install 2.5.0
