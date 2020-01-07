@@ -60,6 +60,8 @@ echo '\n👨‍🚀 git configuration'
 git config --global core.editor "nano"
 git config --global user.name $GIT_USER
 git config --global user.email $GIT_EMAIL
+echo *.DS_Store > ~/.gitignore_global
+git config --global core.excludesfile '~/.gitignore_global'
 
 # MAS app install (source : https://github.com/argon/mas/issues/41#issuecomment-245846651)
 function mas_install () {
@@ -108,6 +110,7 @@ echo '\n👨‍🚀 Installing development apps'
 brew install python python3
 brew cask install arduino atom beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
 mas_install 'Xcode'
+mas_install 'DevCleaner'
 apm install sync-settings
 rbenv install 2.5.0
 rbenv global 2.5.0
