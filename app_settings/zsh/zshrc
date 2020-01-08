@@ -36,3 +36,17 @@ zstyle ':notify:*' activate-terminal yes
 zstyle ':notify:*' command-complete-timeout 15
 
 PATH="$HOME/.fastlane/bin:$PATH"
+
+alias gbb='git merge-base $(current_branch) master'
+alias gco='git checkout'
+alias ggpull='git pull origin $(current_branch)'
+alias ggpush='git push origin $(current_branch)'
+alias ggpusht='git push origin $(current_branch) --tags'
+alias gl='git log --all --graph -100 --color --decorate --pretty=format:"%C(yellow)%h%Creset %Cred%d%Creset %s %Cblue<%an>%Creset [%ar]"'
+alias gfa='git fetch --all -p'
+alias gls='git ls-files'
+alias gsquash='git rebase -i $(gbb)'
+alias gst='git status'
+alias current_branch='git symbolic-ref HEAD | awk -F"/" '\''{print $NF}'\'''
+alias cub='current_branch'
+alias gffs='git stash && git checkout production && git fetch --all --prune && git pull'
