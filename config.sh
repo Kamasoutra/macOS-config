@@ -45,6 +45,7 @@ mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 
 echo '\n👨‍🚀 Installing Homebrew Taps'
 brew tap caskroom/cask
+brew tap homebrew/cask-versions
 brew tap buo/cask-upgrade
 brew tap proxmark/proxmark3
 
@@ -77,7 +78,7 @@ function mas_install () {
 }
 
 echo '\n👨‍🚀 Installing web navigators'
-brew cask install firefox google-chrome min opera opera-neon
+brew cask install firefox firefox-nightly google-chrome min opera opera-neon
 
 echo '\n👨‍🚀 Installing social apps'
 brew cask install discord skype slack telegram
@@ -108,7 +109,7 @@ mas_install 'iMovie'
 
 echo '\n👨‍🚀 Installing development apps'
 brew install python python3
-brew cask install arduino atom beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
+brew cask install arduino atom atom-nightly beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
 mas_install 'Xcode'
 mas_install 'DevCleaner'
 apm install sync-settings
