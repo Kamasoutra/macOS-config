@@ -101,7 +101,7 @@ brew install --cask iina vlc
 
 echo '\n👨‍🚀 Installing development apps'
 brew install awscli python python3
-brew install --cask arduino atom beyond-compare codekit dbeaver-community docker electrum intellij-idea-ce kitematic postman sublime-text
+brew install --cask arduino atom beyond-compare codekit dbeaver-community docker intellij-idea-ce kitematic postman sublime-text
 apm install sync-settings
 GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
 

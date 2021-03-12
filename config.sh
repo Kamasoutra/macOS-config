@@ -31,7 +31,7 @@ fi
 if test ! $(which brew)
 then
   echo '\n👨‍🚀 Homebrew install'
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # Homebrew update
@@ -44,8 +44,6 @@ brew install mas
 mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 
 echo '\n👨‍🚀 Installing Homebrew Taps'
-brew tap caskroom/cask
-brew tap homebrew/cask-versions
 brew tap buo/cask-upgrade
 brew tap proxmark/proxmark3
 
@@ -86,13 +84,12 @@ mas_install 'Twitter'
 
 echo '\n👨‍🚀 Installing utilities apps'
 brew install exiftool iperf lolcat ncdu nmap nyancat speedtest_cli terminal-notifier thefuck trash wakeonlan
-brew cask install aerial daisydisk balenaetcher exodus handbrake hugin molotov sketch-toolbox spectacle virtualbox wireshark xmind
+brew install --cask aerial daisydisk balenaetcher exodus handbrake hugin molotov sketch-toolbox spectacle virtualbox wireshark xmind
 mas_install 'Airmail 3'
 mas_install 'Amphetamine'
 mas_install 'DrCleaner'
 mas_install 'Gifski'
-mas_install 'Go2Shell'
-mas_install 'Paste'
+mas_install 'Spark'
 mas_install 'The Unarchiver'
 mas_install 'Yummy FTP'
 npm install -g brb tldr
@@ -101,15 +98,15 @@ curl -o /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask/Casks/sketch.rb 
 brew cask install sketch
 
 echo '\n👨‍🚀 Installing music apps'
-brew cask install lastfm spotify
+brew install --cask lastfm spotify
 
 echo '\n👨‍🚀 Installing video apps'
-brew cask install iina vlc
+brew install --cask iina vlc
 mas_install 'iMovie'
 
 echo '\n👨‍🚀 Installing development apps'
 brew install python python3
-brew cask install arduino atom atom-nightly beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
+brew install --cask arduino atom beyond-compare codekit docker intellij-idea-ce java kitematic postman sublime-text
 mas_install 'Xcode'
 mas_install 'DevCleaner'
 apm install sync-settings
@@ -119,17 +116,17 @@ GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
 
 echo '\n👨‍🚀 Installing security apps'
 brew install proxmark3
-brew cask install authy-desktop bitwarden keybase near-lock tunnelblick
+brew install --cask authy bitwarden keybase tunnelblick
 mas_install 'Encrypto'
 
 echo '\n👨‍🚀 Installing office apps'
-brew cask install macdown
+brew install --cask macdown
 mas_install 'Keynote'
 mas_install 'Numbers'
 mas_install 'Pages'
 
 echo '\n👨‍🚀 Installing games'
-brew cask install league-of-legends minecraft openemu steam
+brew install --cask league-of-legends minecraft openemu steam
 
 echo '\n👨‍🚀 Post install cleanup'
 brew cleanup
