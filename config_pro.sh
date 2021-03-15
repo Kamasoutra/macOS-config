@@ -61,6 +61,7 @@ git config --global user.name $GIT_USER
 git config --global user.email $GIT_EMAIL
 echo *.DS_Store > ~/.gitignore_global
 git config --global core.excludesfile '~/.gitignore_global'
+git config --global pull.rebase false
 
 # MAS app install (source : https://github.com/argon/mas/issues/41#issuecomment-245846651)
 function mas_install () {
