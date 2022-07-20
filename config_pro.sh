@@ -61,6 +61,7 @@ git config --global user.name $GIT_USER
 git config --global user.email $GIT_EMAIL
 echo *.DS_Store > ~/.gitignore_global
 git config --global core.excludesfile '~/.gitignore_global'
+git config --global pull.rebase false
 
 # MAS app install (source : https://github.com/argon/mas/issues/41#issuecomment-245846651)
 function mas_install () {
@@ -100,14 +101,14 @@ echo '\n👨‍🚀 Installing video apps'
 brew install --cask iina vlc
 
 echo '\n👨‍🚀 Installing development apps'
-brew install python python3
-brew install --cask arduino atom atom-nightly beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
+brew install awscli python python3
+brew install --cask arduino atom beyond-compare codekit dbeaver-community docker intellij-idea-ce kitematic postman sublime-text
 apm install sync-settings
 GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
 
 echo '\n👨‍🚀 Installing security apps'
 brew install proxmark3
-brew install --cask authy-desktop bitwarden keybase tunnelblick
+brew install --cask authy bitwarden keybase tunnelblick
 mas_install 'Encrypto'
 
 echo '\n👨‍🚀 Installing office apps'

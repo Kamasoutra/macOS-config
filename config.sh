@@ -84,8 +84,7 @@ brew install discord skype slack telegram
 mas_install 'Twitter'
 
 echo '\n👨‍🚀 Installing utilities apps'
-brew install exiftool iperf lolcat ncdu nmap nyancat speedtest_cli terminal-notifier thefuck trash wakeonlan
-brew install aerial daisydisk balenaetcher eul exodus handbrake hugin spectacle virtualbox wireshark xmind
+brew install aerial daisydisk exiftool balenaetcher eul exodus handbrake hugin iperf lolcat ncdu nmap nyancat spectacle speedtest_cli terminal-notifier thefuck trash virtualbox wakeonlan wireshark xmind
 mas_install 'Amphetamine'
 mas_install 'Gifski'
 mas_install 'Spark'
@@ -100,18 +99,23 @@ echo '\n👨‍🚀 Installing video apps'
 brew install iina vlc
 
 echo '\n👨‍🚀 Installing development apps'
-brew install python python3
-brew install arduino atom dbeaver-community docker intellij-idea-ce java kitematic postman sublime-text visual-studio-code
+brew install arduino atom dbeaver-community docker intellij-idea-ce java kitematic postman python python3 sublime-text visual-studio-code
 mas_install 'Xcode'
 mas_install 'DevCleaner'
 apm install sync-settings
 rbenv install 2.5.0
 rbenv global 2.5.0
+asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+asdf plugin-add elixir https://github.com/asdf-vm/asdf-elixir.git
+asdf install erlang 23.3.4.4
+asdf install elixir 1.11.4
+asdf install elixir 1.12.3
+asdf global erlang 23.3.4.4
+asdf global elixir 1.11.4
 GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
 
 echo '\n👨‍🚀 Installing security apps'
-brew install proxmark3
-brew install authy bitwarden keybase tunnelblick
+brew install authy bitwarden keybase proxmark3 tunnelblick
 mas_install 'Encrypto'
 
 echo '\n👨‍🚀 Installing office apps'
@@ -121,7 +125,7 @@ mas_install 'Numbers'
 mas_install 'Pages'
 
 echo '\n👨‍🚀 Installing games'
-brew install league-of-legends minecraft openemu steam
+sbrew install league-of-legends minecraft openemu steam
 
 echo '\n👨‍🚀 Post install cleanup'
 brew cleanup
