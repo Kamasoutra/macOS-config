@@ -31,7 +31,7 @@ fi
 if test ! $(which brew)
 then
   echo '\n👨‍🚀 Homebrew install'
-  /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # Homebrew update
@@ -44,13 +44,11 @@ brew install mas
 mas signin $MAS_ACCOUNT "$MAS_PASSWORD"
 
 echo '\n👨‍🚀 Installing Homebrew Taps'
-brew tap caskroom/cask
-brew tap homebrew/cask-versions
 brew tap buo/cask-upgrade
 brew tap proxmark/proxmark3
 
 echo '\n👨‍🚀 Installing command-line utils'
-brew install git curl imagemagick@6 node rbenv wget zsh cmake coreutils
+brew install git android-platform-tools asdf curl imagemagick@6 node rbenv wget zsh cmake coreutils
 
 echo '\n👨‍🚀 Installing oh-my-zsh in a new window'
 osascript -e 'tell app "Terminal"
@@ -63,6 +61,7 @@ git config --global user.name $GIT_USER
 git config --global user.email $GIT_EMAIL
 echo *.DS_Store > ~/.gitignore_global
 git config --global core.excludesfile '~/.gitignore_global'
+git config --global pull.rebase false
 
 # MAS app install (source : https://github.com/argon/mas/issues/41#issuecomment-245846651)
 function mas_install () {
@@ -78,38 +77,31 @@ function mas_install () {
 }
 
 echo '\n👨‍🚀 Installing web navigators'
-brew cask install firefox firefox-nightly google-chrome min opera opera-neon
+brew install firefox google-chrome min opera opera-neon
 
 echo '\n👨‍🚀 Installing social apps'
-brew cask install discord skype slack telegram
+brew install discord skype slack telegram
 mas_install 'Twitter'
 
 echo '\n👨‍🚀 Installing utilities apps'
 brew install exiftool iperf lolcat ncdu nmap nyancat speedtest_cli terminal-notifier thefuck trash wakeonlan
-brew cask install aerial daisydisk balenaetcher exodus handbrake hugin molotov sketch-toolbox spectacle virtualbox wireshark xmind
-mas_install 'Airmail 3'
+brew install aerial daisydisk balenaetcher eul exodus handbrake hugin spectacle virtualbox wireshark xmind
 mas_install 'Amphetamine'
-mas_install 'DrCleaner'
 mas_install 'Gifski'
-mas_install 'Go2Shell'
-mas_install 'Paste'
+mas_install 'Spark'
 mas_install 'The Unarchiver'
 mas_install 'Yummy FTP'
 npm install -g brb tldr
-# custom cask for sketch in version 43.2
-curl -o /usr/local/Homebrew/Library/Taps/homebrew/homebrew-cask/Casks/sketch.rb https://raw.githubusercontent.com/Kamasoutra/macOS-config/master/custom_cask/sketch.rb
-brew cask install sketch
 
 echo '\n👨‍🚀 Installing music apps'
-brew cask install lastfm spotify
+brew install lastfm spotify
 
 echo '\n👨‍🚀 Installing video apps'
-brew cask install iina vlc
-mas_install 'iMovie'
+brew install iina vlc
 
 echo '\n👨‍🚀 Installing development apps'
 brew install python python3
-brew cask install arduino atom atom-nightly beyond-compare codekit docker electrum intellij-idea-ce java kitematic postman sublime-text
+brew install arduino atom dbeaver-community docker intellij-idea-ce java kitematic postman sublime-text visual-studio-code
 mas_install 'Xcode'
 mas_install 'DevCleaner'
 apm install sync-settings
@@ -119,21 +111,21 @@ GITHUB_TOKEN=$ATOM_SS_TOKEN GIST_ID=$ATOM_SS_GIST atom
 
 echo '\n👨‍🚀 Installing security apps'
 brew install proxmark3
-brew cask install authy-desktop bitwarden keybase near-lock tunnelblick
+brew install authy bitwarden keybase tunnelblick
 mas_install 'Encrypto'
 
 echo '\n👨‍🚀 Installing office apps'
-brew cask install macdown
+brew install macdown
 mas_install 'Keynote'
 mas_install 'Numbers'
 mas_install 'Pages'
 
 echo '\n👨‍🚀 Installing games'
-brew cask install league-of-legends minecraft openemu steam
+brew install league-of-legends minecraft openemu steam
 
 echo '\n👨‍🚀 Post install cleanup'
 brew cleanup
-brew cask cleanup
+brew cleanup
 
 echo '\n👨‍🚀 Setting up macOS preferences'
 # daily updates
