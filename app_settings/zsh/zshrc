@@ -514,19 +514,32 @@ _bw_sync_file() {
   bwu || return 1
 
   local content=$(< "$file")
-  local item_id=$(bw get item "$name" --session "$BW_SESSION" 2>/dev/null | jq -r '.id // empty')
 
-  if [ -n "$item_id" ]; then
-    bw get item "$name" --session "$BW_SESSION" | \
-      jq --arg content "$content" '.notes = $content' | \
-      bw encode | bw edit item "$item_id" --session "$BW_SESSION" > /dev/null
-    echo "✅ Bitwarden : '$name' mis à jour"
-  else
+  # Récupère tous les IDs avec ce nom exact (gestion des doublons)
+  local all_ids=($(bw list items --search "$name" --session "$BW_SESSION" 2>/dev/null \
+    | jq -r --arg name "$name" '.[] | select(.name == $name) | .id'))
+
+  if [ ${#all_ids[@]} -eq 0 ]; then
+    # Aucun item — création
     bw get template item | \
       jq --arg name "$name" --arg content "$content" \
         '.type = 2 | .name = $name | .notes = $content | .secureNote = {"type": 0}' | \
       bw encode | bw create item --session "$BW_SESSION" > /dev/null
     echo "✅ Bitwarden : '$name' créé"
+  else
+    # Garde le premier, supprime les doublons
+    local keep_id="${all_ids[1]}"
+    if [ ${#all_ids[@]} -gt 1 ]; then
+      echo "⚠️  ${#all_ids[@]} doublons détectés pour '$name', nettoyage..."
+      for dup_id in "${all_ids[@]:1}"; do
+        bw delete item "$dup_id" --session "$BW_SESSION" > /dev/null
+      done
+    fi
+    # Met à jour l'item conservé
+    bw get item "$keep_id" --session "$BW_SESSION" | \
+      jq --arg content "$content" '.notes = $content' | \
+      bw encode | bw edit item "$keep_id" --session "$BW_SESSION" > /dev/null
+    echo "✅ Bitwarden : '$name' mis à jour"
   fi
 }
 
