@@ -246,19 +246,16 @@ brew install go rust imagemagick node rbenv ruby-build python@3.13 uv asdf
 rbenv install 3.3.0
 rbenv global 3.3.0
 
-# asdf plugins (pro — Erlang/Elixir pour le boulot)
-if [ "$IS_PRO" = true ]; then
-  asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
-  asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
-  asdf plugin add nodejs
-  # Mettre à jour les versions selon besoin
-  asdf install erlang 28.3
-  asdf install elixir 1.19.4
-  asdf install nodejs 24.10.0
-  asdf global erlang 28.3
-  asdf global elixir 1.19.4
-  asdf global nodejs 24.10.0
-fi
+# asdf plugins — mettre à jour les versions selon besoin
+asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
+asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
+asdf plugin add nodejs
+asdf install erlang 28.3
+asdf install elixir 1.19.4
+asdf install nodejs 24.10.0
+asdf global erlang 28.3
+asdf global elixir 1.19.4
+asdf global nodejs 24.10.0
 
 # Cloud & infra
 INFRA_FORMULAS="awscli terraform"
