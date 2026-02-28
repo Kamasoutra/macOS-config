@@ -500,12 +500,11 @@ bwlock() {
   echo "🔒 Bitwarden verrouillé"
 }
 
-# bw_sync_config : sync le fichier macOS-config-variables vers Bitwarden
-# Usage : bw_sync_config [chemin/vers/fichier]
-BW_CONFIG_FILE="${HOME}/dev_perso/macOS-config/macOS-config-variables"
-bw_sync_config() {
-  local file="${1:-$BW_CONFIG_FILE}"
-  local name="macOS-config-variables"
+# _bw_sync_file : fonction interne — sync un fichier local vers une note Bitwarden
+# Usage : _bw_sync_file <chemin/fichier> <nom-note-bitwarden>
+_bw_sync_file() {
+  local file="$1"
+  local name="$2"
 
   if [ ! -f "$file" ]; then
     echo "❌ Fichier introuvable : $file"
@@ -524,11 +523,27 @@ bw_sync_config() {
     echo "✅ Bitwarden : '$name' mis à jour"
   else
     bw get template item | \
-      jq --arg content "$content" \
-        '.type = 2 | .name = "macOS-config-variables" | .notes = $content | .secureNote = {"type": 0}' | \
+      jq --arg name "$name" --arg content "$content" \
+        '.type = 2 | .name = $name | .notes = $content | .secureNote = {"type": 0}' | \
       bw encode | bw create item --session "$BW_SESSION" > /dev/null
     echo "✅ Bitwarden : '$name' créé"
   fi
+}
+
+# bw_sync_config : sync macOS-config-variables → Bitwarden
+BW_CONFIG_FILE="${HOME}/dev_perso/macOS-config/macOS-config-variables"
+bw_sync_config() {
+  _bw_sync_file "${1:-$BW_CONFIG_FILE}" "macOS-config-variables"
+}
+
+# bw_sync_secrets : sync ~/.secrets → Bitwarden
+bw_sync_secrets() {
+  _bw_sync_file "${1:-${HOME}/.secrets}" "secrets"
+}
+
+# bw_sync_all : sync les deux en une commande
+bw_sync_all() {
+  bw_sync_config && bw_sync_secrets
 }
 
 # Added by LM Studio CLI tool (lms)

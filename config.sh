@@ -80,6 +80,12 @@ if [ -n "$2" ] && [ -f "$2" ]; then
   source "$2"
 elif _load_from_bitwarden 2>/dev/null; then
   echo '\n👨‍🚀 Chargement des variables depuis Bitwarden...'
+  # Récupère aussi ~/.secrets depuis Bitwarden
+  echo '\n👨‍🚀 Restauration de ~/.secrets depuis Bitwarden...'
+  bw get notes "secrets" --session "$BW_SESSION" > ~/.secrets 2>/dev/null \
+    && chmod 600 ~/.secrets \
+    && echo '    ~/.secrets restauré' \
+    || echo '    ~/.secrets introuvable dans Bitwarden (à créer avec bw_sync_secrets)'
 elif [ -f "$ICLOUD_CONFIG" ]; then
   echo '\n👨‍🚀 Chargement des variables depuis iCloud...'
   source "$ICLOUD_CONFIG"
