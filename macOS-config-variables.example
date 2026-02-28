@@ -1,8 +1,6 @@
-MAS_ACCOUNT="yolo@domain.com"
-MAS_PASSWORD="password"
-
 GIT_USER="Tony Stark"
 GIT_EMAIL="stark@stark-industries.net"
 
-ATOM_SS_TOKEN="d58df..."
-ATOM_SS_GIST="73b9..."
+# Pro only
+GIT_WORK_EMAIL="tony@shield.gov"
+GIT_WORK_DIR="/Users/tony/work/"

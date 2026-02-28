@@ -1,26 +1,54 @@
 # macOS-config
 
-This script allows me to install everything I need when setting up a new Mac. Fork it, edit it in any way you want !
+Unified setup script for a new Mac — supports both personal and pro configurations.
 
-## Basic installation
+## Usage
 
-**Via curl**
-
-```
+```sh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Kamasoutra/macOS-config/master/config.sh)"
 ```
 
-## Custom installation
+The script will ask whether you're setting up a **perso** or **pro** machine, then install and configure everything accordingly.
 
-**Use your own credentials**
+### Arguments (optional)
 
-Make your own version of the "macOS-config-variables.example" file to include your own credentials. Then edit the "CONFIG_FILE" variable in the config.sh script to your very own personal path.
+```sh
+# Specify machine type directly
+./config.sh pro
+./config.sh perso
 
-⚠️ Storing real credentials in a file is not safe at all, use at your own risks ⚠️
+# Specify machine type + path to a variables file
+./config.sh pro /path/to/macOS-config-variables
+```
+
+## Variables file
+
+The script looks for your variables in this order:
+
+1. **Argument** — path passed as second argument
+2. **Bitwarden** — secure note named `macOS-config-variables` in your vault
+3. **iCloud Drive** — `~/Library/Mobile Documents/com~apple~CloudDocs/macOS-config-variables`
+4. **USB** — `/Volumes/Kama-encrypted/#pro/` or `#Kama/`
+5. **Interactive prompt** — falls back to manual input (reads existing git config as defaults)
+
+See `macOS-config-variables.example` for the expected format.
+
+## What gets installed
+
+| Category | Notable tools |
+|---|---|
+| CLI | git, bat, eza, fzf, ripgrep, jq, micro, mtr, trash… |
+| Browsers | Arc, Firefox, Chrome |
+| Dev | VS Code, Warp, Docker, Android Studio, Postgres, MySQL… |
+| Cloud (pro) | awscli, terraform, aws-cdk, serverless |
+| Security | Bitwarden, ProtonVPN, proxmark3, authy… |
+| Security recon (pro) | amass, subfinder, httpx, ffuf, mitmproxy |
+| AI | Claude, ChatGPT, LM Studio (pro) |
+| Games | Steam, League of Legends, Minecraft, OpenEmu |
 
 ## Credits
 
-This script is based on the work of :
-- nicolinuxfr : https://github.com/nicolinuxfr/macOS-post-installation
-- kevinSuttle : https://github.com/kevinSuttle/macOS-Defaults
-- mathiasbynens : https://github.com/mathiasbynens/dotfiles
+Based on the work of:
+- nicolinuxfr: https://github.com/nicolinuxfr/macOS-post-installation
+- kevinSuttle: https://github.com/kevinSuttle/macOS-Defaults
+- mathiasbynens: https://github.com/mathiasbynens/dotfiles
