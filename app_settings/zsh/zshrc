@@ -500,6 +500,37 @@ bwlock() {
   echo "🔒 Bitwarden verrouillé"
 }
 
+# bw_sync_config : sync le fichier macOS-config-variables vers Bitwarden
+# Usage : bw_sync_config [chemin/vers/fichier]
+BW_CONFIG_FILE="${HOME}/dev_perso/macOS-config/macOS-config-variables"
+bw_sync_config() {
+  local file="${1:-$BW_CONFIG_FILE}"
+  local name="macOS-config-variables"
+
+  if [ ! -f "$file" ]; then
+    echo "❌ Fichier introuvable : $file"
+    return 1
+  fi
+
+  bwu || return 1
+
+  local content=$(< "$file")
+  local item_id=$(bw get item "$name" --session "$BW_SESSION" 2>/dev/null | jq -r '.id // empty')
+
+  if [ -n "$item_id" ]; then
+    bw get item "$name" --session "$BW_SESSION" | \
+      jq --arg content "$content" '.notes = $content' | \
+      bw encode | bw edit item "$item_id" --session "$BW_SESSION" > /dev/null
+    echo "✅ Bitwarden : '$name' mis à jour"
+  else
+    bw get template item | \
+      jq --arg content "$content" \
+        '.type = 2 | .name = "macOS-config-variables" | .notes = $content | .secureNote = {"type": 0}' | \
+      bw encode | bw create item --session "$BW_SESSION" > /dev/null
+    echo "✅ Bitwarden : '$name' créé"
+  fi
+}
+
 # Added by LM Studio CLI tool (lms)
 export PATH="$PATH:/Users/kama/.lmstudio/bin"
 
