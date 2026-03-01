@@ -123,8 +123,6 @@ alias hosts="sudo micro /etc/hosts"
 alias gbb='git merge-base $(current_branch) master'
 alias gco='git checkout'
 alias gcb='git checkout -b'
-# alias gcm='git checkout master || git checkout main'
-# alias gcp='git checkout production'
 alias ggpull='git pull origin $(current_branch)'
 alias ggpush='git push origin $(current_branch)'
 alias ggpusht='git push origin $(current_branch) --tags'
@@ -144,20 +142,17 @@ alias gcan='git commit -v --amend --no-edit'
 alias gdiff='git diff'
 alias gdc='git diff --cached'
 alias current_branch='git symbolic-ref --short HEAD'
-# alias current_branch='git symbolic-ref HEAD | awk -F"/" '\''{print $NF}'\'''
 alias cub='current_branch'
-# alias gffs='git stash && git checkout production && git fetch --all --prune && git pull'
 alias gffs='git stash && git checkout $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed "s@^refs/remotes/origin/@@" || git branch -r | grep -oE "origin/(main|master|production)" | head -1 | sed "s/origin\///") && git fetch --all --prune && git pull'
 alias gsd='git stash && git stash drop'
 alias gsc='git stash && git stash clear'
 alias gbc='git branch | grep '/' | xargs git branch -D && git fetch -p'
-# alias gclean_old='git checkout production && git fetch --all -p && git branch | grep -vE "^\*|^  (master|production|staging)$" | xargs -r git branch -D'
-# alias gclean_old='git checkout $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed "s@^refs/remotes/origin/@@" || git branch -r | grep -oE "origin/(main|master|production)" | head -1 | sed "s/origin\///") && git fetch --all -p && git branch | grep -vE "^\*|^  (master|main|production|staging)$" | xargs -r git branch -D'
 alias review="merge --no-ff --no-commit"
 alias gwip='git add -A && git commit -m "WIP" --no-verify'
 alias gunwip='git log -n 1 | grep -q -c "\-\-wip\-\-" && git reset HEAD~1'
 alias nah='git reset --hard && git clean -df'
 alias gdefault='git checkout $(git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed "s@^refs/remotes/origin/@@" || git branch -r | grep -oE "origin/(main|master|production)" | head -1 | sed "s@origin/@@")'
+# desc: Nettoyage interactif du repo git (branches, stash, fetch, pull)
 gcleaner() {
     echo ""
     echo "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m"
@@ -359,6 +354,7 @@ alias deps_update='python ~/flamefy/dev/@toolbox/deps_update.py'
 alias repo='/Applications/Firefox.app/Contents/MacOS/firefox -new-tab $(get_github_url)'
 alias ci='/Applications/Firefox.app/Contents/MacOS/firefox -new-tab $(get_github_url)/-/pipelines'
 alias mr='/Applications/Firefox.app/Contents/MacOS/firefox -new-tab $(get_github_url)/-/merge_requests'
+# desc: Retourne l'URL HTTPS du repo git courant
 function get_github_url() {
   git config remote.origin.url | sed "s/git@\(.*\):\(.*\)\.git/https:\/\/\1\/\2/"
 }
@@ -407,12 +403,12 @@ eval "$(tirith init)"
 clear
 
 # Fonctions utiles
-# Créer un dossier et s'y déplacer
+# desc: Créer un dossier et s'y déplacer
 mkcd() {
   mkdir -p "$1" && cd "$1"
 }
 
-# Extraction intelligente d'archives
+# desc: Extraction intelligente d'archives (zip, tar, gz, rar…)
 extract() {
   if [ -f "$1" ]; then
     case "$1" in
@@ -434,7 +430,7 @@ extract() {
   fi
 }
 
-# Git: Switch to branch avec fuzzy search
+# desc: Switcher de branche git avec fuzzy search (fzf)
 gswitch() {
   local branches branch
   branches=$(git branch -a) &&
@@ -442,12 +438,12 @@ gswitch() {
   git checkout $(echo "$branch" | sed "s:.* remotes/origin/::" | sed "s:.* ::")
 }
 
-# Recherche dans l'historique avec fzf
+# desc: Rechercher et rejouer une commande dans l'historique (fzf)
 fh() {
   eval $( ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed 's/ *[0-9]* *//')
 }
 
-# Kill process avec fuzzy search
+# desc: Tuer un process avec fuzzy search (fzf)
 fkill() {
   local pid
   pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
@@ -457,7 +453,7 @@ fkill() {
   fi
 }
 
-# Afficher la taille des dossiers
+# desc: Afficher la taille des dossiers dans le répertoire courant
 ds() {
   du -sh ${1:-.}/* | sort -h
 }
@@ -474,7 +470,7 @@ if command -v bw &>/dev/null && [ -f "$BW_SESSION_FILE" ]; then
   unset _bw_stored
 fi
 
-# bwu : déverrouille le vault et sauvegarde la session
+# desc: Déverrouiller le vault Bitwarden et sauvegarder la session
 bwu() {
   if [ -n "$BW_SESSION" ] && bw unlock --check --session "$BW_SESSION" &>/dev/null; then
     echo "🔐 Bitwarden : session déjà active"
@@ -492,7 +488,7 @@ bwu() {
   fi
 }
 
-# bwlock : verrouille et supprime la session
+# desc: Verrouiller le vault Bitwarden et supprimer la session locale
 bwlock() {
   bw lock
   rm -f "$BW_SESSION_FILE"
@@ -543,20 +539,77 @@ _bw_sync_file() {
   fi
 }
 
-# bw_sync_config : sync macOS-config-variables → Bitwarden
+# desc: Synchroniser macOS-config-variables vers Bitwarden
 BW_CONFIG_FILE="${HOME}/dev_perso/macOS-config/macOS-config-variables"
 bw_sync_config() {
   _bw_sync_file "${1:-$BW_CONFIG_FILE}" "macOS-config-variables"
 }
 
-# bw_sync_secrets : sync ~/.secrets → Bitwarden
+# desc: Synchroniser ~/.secrets vers Bitwarden
 bw_sync_secrets() {
   _bw_sync_file "${1:-${HOME}/.secrets}" "secrets"
 }
 
-# bw_sync_all : sync les deux en une commande
+# desc: Synchroniser config-variables ET secrets vers Bitwarden
 bw_sync_all() {
   bw_sync_config && bw_sync_secrets
+}
+
+# desc: Lister tous les aliases et fonctions custom (halp <filtre> pour filtrer)
+halp() {
+  local filter="${1:-}"
+  local zshrc="$HOME/.zshrc"
+
+  echo ""
+  if [ -n "$filter" ]; then
+    printf "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m\n"
+    printf "\033[1;36m    📖 Aliases & commandes — filtre : %s\033[0m\n" "$filter"
+    printf "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m\n"
+  else
+    printf "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m\n"
+    printf "\033[1;36m         📖 Aliases & commandes custom\033[0m\n"
+    printf "\033[1;36m━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\033[0m\n"
+  fi
+
+  # Aliases groupés par section (basé sur les commentaires du zshrc)
+  awk \
+    -v filter="$filter" \
+    -v cs="\033[1;35m" \
+    -v cn="\033[33m" \
+    -v cv="\033[2m" \
+    -v cr="\033[0m" \
+  '
+    /^# [A-Za-z]/ { section = substr($0, 3); printed = 0 }
+    /^alias / {
+      line = substr($0, 7)
+      i = index(line, "=")
+      name = substr(line, 1, i - 1)
+      val  = substr(line, i + 1)
+      if (substr(val, 1, 1) == "\"" || substr(val, 1, 1) == "'\''" ) val = substr(val, 2, length(val) - 2)
+      if (length(val) > 60) val = substr(val, 1, 60) "…"
+      if (filter == "" || name ~ filter || val ~ filter || tolower(section) ~ tolower(filter)) {
+        if (!printed && section != "") { printf "\n%s  ▸ %s%s\n", cs, section, cr; printed = 1 }
+        printf "  %s%-22s%s %s%s%s\n", cn, name, cr, cv, val, cr
+      }
+    }
+  ' "$zshrc"
+
+  # Fonctions custom avec descriptions (hors fonctions privées _*)
+  if [ -z "$filter" ]; then
+    printf "\n\033[1;35m  ▸ Fonctions\033[0m\n"
+    awk '
+      /^# desc:/ { desc = substr($0, 9); next }
+      /^[a-zA-Z][a-zA-Z0-9_]*[[:space:]]*\(\)/ {
+        name = $0; gsub(/[[:space:]]*\(\).*/, "", name)
+        if (name !~ /^_/) printf "  \033[33m%-22s\033[0m \033[2m%s\033[0m\n", name, desc
+        desc = ""
+      }
+      !/^# desc:/ { desc = "" }
+    ' "$zshrc"
+  fi
+
+  echo ""
+  printf "\033[2m  💡 halp <mot> pour filtrer — ex: halp git, halp bw\033[0m\n\n"
 }
 
 # Added by LM Studio CLI tool (lms)
