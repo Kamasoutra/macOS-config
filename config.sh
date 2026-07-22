@@ -347,7 +347,7 @@ brew install --cask $AI_CASKS
 # ─────────────────────────────────────────────────────────────────────────────
 
 echo '\n👨‍🚀 Post install cleanup'
-brew cleanup
+brew cleanup -s --prune=all
 
 # ─────────────────────────────────────────────────────────────────────────────
 # macOS PREFERENCES
@@ -447,6 +447,13 @@ curl -o ~/.zshrc https://raw.githubusercontent.com/Kamasoutra/macOS-config/maste
 
 # oh-my-zsh theme
 curl -o ~/.oh-my-zsh/themes/kama.zsh-theme https://raw.githubusercontent.com/Kamasoutra/macOS-config/master/app_settings/oh-my-zsh/kama.zsh-theme
+
+# LaunchAgent : ménage hebdomadaire du cache Homebrew (brew cleanup -s --prune=all)
+# Découplé de « brew autoupdate » : empêche le cache de téléchargement de gonfler (jusqu'à 32 Go observés)
+mkdir -p ~/Library/LaunchAgents
+curl -fsSL https://raw.githubusercontent.com/Kamasoutra/macOS-config/master/app_settings/launchd/com.kama.brew-cleanup.plist | sed "s#__HOME__#$HOME#g" > ~/Library/LaunchAgents/com.kama.brew-cleanup.plist
+launchctl bootout gui/$(id -u)/com.kama.brew-cleanup 2>/dev/null
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.kama.brew-cleanup.plist
 
 # ─────────────────────────────────────────────────────────────────────────────
 # macOS UPDATES

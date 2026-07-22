@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.kama.brew-cleanup</string>
+
+  <!-- Menage agressif du cache Homebrew : purge TOUT le cache de telechargement
+       (--prune=all) sans attendre les 120 jours du cleanup par defaut, qui laisse
+       le cache gonfler (jusqu'a 32 Go observes). Decouple du tap homebrew-autoupdate
+       pour survivre a une regeneration de son script.
+       __HOME__ est substitue par config.sh a l'installation (sed). -->
+  <key>ProgramArguments</key>
+  <array>
+    <string>/opt/homebrew/bin/brew</string>
+    <string>cleanup</string>
+    <string>-s</string>
+    <string>--prune=all</string>
+  </array>
+
+  <key>EnvironmentVariables</key>
+  <dict>
+    <key>HOME</key>
+    <string>__HOME__</string>
+    <key>PATH</key>
+    <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    <key>HOMEBREW_CACHE</key>
+    <string>__HOME__/Library/Caches/Homebrew</string>
+    <key>HOMEBREW_LOGS</key>
+    <string>__HOME__/Library/Logs/Homebrew</string>
+  </dict>
+
+  <!-- Une fois par semaine, dimanche 03h00 (rattrape au reveil si la machine dormait). -->
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Weekday</key>
+    <integer>0</integer>
+    <key>Hour</key>
+    <integer>3</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+
+  <!-- Tourne aussi au chargement (boot/login) pour ne jamais laisser le cache deriver. -->
+  <key>RunAtLoad</key>
+  <true/>
+
+  <key>StandardOutPath</key>
+  <string>__HOME__/Library/Logs/brew-cleanup.log</string>
+  <key>StandardErrorPath</key>
+  <string>__HOME__/Library/Logs/brew-cleanup.log</string>
+
+  <key>LowPriorityBackgroundIO</key>
+  <true/>
+  <key>LowPriorityIO</key>
+  <true/>
+  <key>ProcessType</key>
+  <string>Background</string>
+</dict>
+</plist>
